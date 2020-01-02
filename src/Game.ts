@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Player, PlayerFaceDirection, ICoordinates } from './Engine/Player';
-import Common from './Common';
+import Common from './util/Common';
 import Collision from './Engine/Collision';
 
 export default class Game{
@@ -34,6 +34,7 @@ export default class Game{
 			return;
 		}
 
+		document.getElementById('loading')?.remove();
 		this.loading = true;
 		Collision.loadObjects();
 		this.loader.add('overworld', '../assets/world.png')
@@ -47,12 +48,11 @@ export default class Game{
 	}
 
 	private gameLoaded(){
-		this.overWorld = new PIXI.Sprite(this.loader.resources['overworld'].texture);
+		this.overWorld = new PIXI.Sprite(this.loader.resources.overworld.texture);
 		this.overWorld.x = 400 + (this.player.getX() * -48);
 		this.overWorld.y = 349 + (this.player.getY() * -48);
-		console.log(this.overWorld.x, this.overWorld.y);
 		this.overWorld.scale.set(3, 3);
-		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources['char'].texture);
+		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources.char.texture);
 		this.app.stage.addChild(this.overWorld);
 		this.app.stage.addChild(playerSprite);
 		this.loaded = true;

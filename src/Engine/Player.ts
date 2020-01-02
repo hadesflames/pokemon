@@ -1,4 +1,4 @@
-import Common from '../Common';
+import Common from '../util/Common';
 import Game from '../Game';
 import * as PIXI from 'pixi.js';
 import Collision from './Collision';

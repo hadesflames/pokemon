@@ -1,6 +1,6 @@
 import Pokemon from '../Pokemon';
 import Move from '../Move';
-import Common from '../Common';
+import Common from '../util/Common';
 
 export default class BattleEngine{
 	private p1: Pokemon;

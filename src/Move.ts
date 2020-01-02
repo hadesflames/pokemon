@@ -1,5 +1,5 @@
 import Type from './Type';
-import Common from './Common';
+import Common from './util/Common';
 
 export default class Move{
 	private type: Type;

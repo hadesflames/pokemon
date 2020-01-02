@@ -2,7 +2,7 @@
   "name": "pokemon",
   "version": "1.0.0",
   "description": "Pokemon Game",
-  "main": "dist/main.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "prebuild": "rimraf dist/* && tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
