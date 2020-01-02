@@ -36,8 +36,8 @@ export default class Game{
 
 		this.loading = true;
 		Collision.loadObjects();
-		this.loader.add('https://i.imgur.com/qMQWwKj.png')
-					.add('https://i.imgur.com/3gRBN7t.png')
+		this.loader.add('overworld', '../assets/world.png')
+					.add('char', '../assets/char.png')
 					.on('progress', (loader: PIXI.Loader, resource: PIXI.LoaderResource) => this.loadProgressHandler(loader, resource))
 					.load(() => this.gameLoaded());
 	}
@@ -47,12 +47,12 @@ export default class Game{
 	}
 
 	private gameLoaded(){
-		this.overWorld = new PIXI.Sprite(this.loader.resources['https://i.imgur.com/qMQWwKj.png'].texture);
+		this.overWorld = new PIXI.Sprite(this.loader.resources['overworld'].texture);
 		this.overWorld.x = 400 + (this.player.getX() * -48);
 		this.overWorld.y = 349 + (this.player.getY() * -48);
 		console.log(this.overWorld.x, this.overWorld.y);
 		this.overWorld.scale.set(3, 3);
-		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources['https://i.imgur.com/3gRBN7t.png'].texture);
+		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources['char'].texture);
 		this.app.stage.addChild(this.overWorld);
 		this.app.stage.addChild(playerSprite);
 		this.loaded = true;
