@@ -1,0 +1,27 @@
+{
+  "name": "pokemon",
+  "version": "1.0.0",
+  "description": "Pokemon Game",
+  "main": "dist/main.js",
+  "scripts": {
+    "prebuild": "rimraf dist/* && tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "postbuild": "npx browserify dist/src/main.js > dist/bundle.js",
+    "prestart": "npm run build",
+    "start": "node .",
+    "ministart": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "uglify": "npx uglifyjs --compress --mangle --output dist/bundle.js -- dist/bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^16.5.0",
+    "pixi.js": "^5.2.0",
+    "rimraf": "^3.0.0",
+    "spatial-hashmap": "^1.0.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4",
+    "uglify-es": "^3.3.9"
+  }
+}

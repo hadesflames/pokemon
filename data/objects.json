@@ -1,0 +1,50 @@
+[
+	{
+		"geometry": {
+			"pos": { "x": 65, "y": 264 },
+			"aabb": {
+				"min": { "x": 65, "y": 264 },
+				"max": { "x": 69, "y": 267 }
+			}
+		},
+		"door": { "x": 66, "y": 267 },
+		"msg": null,
+		"msgLocation": null
+	},
+	{
+		"geometry": {
+			"pos": { "x": 64, "y": 267 },
+			"aabb": {
+				"min": { "x": 64, "y": 267 },
+				"max": { "x": 64, "y": 267 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null
+	},
+	{
+		"geometry": {
+			"pos": { "x": 65, "y": 271 },
+			"aabb": {
+				"min": { "x": 65, "y": 271 },
+				"max": { "x": 69, "y": 271 }
+			}
+		},
+		"door": null,
+		"msg": ["Pallet Town\nShades of your journey await!"],
+		"msgLocation": { "x": 69, "y": 271 }
+	},
+	{
+		"geometry": {
+			"pos": { "x": 65, "y": 274 },
+			"aabb": {
+				"min": { "x": 65, "y": 274 },
+				"max": { "x": 65, "y": 274 }
+			}
+		},
+		"door": null,
+		"msg": ["Trainer Tips", "Press Enter to open the Menu!"],
+		"msgLocation": { "x": 65, "y": 274 }
+	}
+]
