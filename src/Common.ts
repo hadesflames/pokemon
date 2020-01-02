@@ -1,6 +1,6 @@
 export default class Common{
 	/**
-	 * Generates a random number between x and y inclusive.
+	 * Generates a random number between min and max inclusive.
 	 * @param x
 	 * @param y
 	 */
