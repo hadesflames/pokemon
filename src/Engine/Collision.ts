@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 import objectData from '../../data/objects.json';
 import SpatialManager from 'spatial-hashmap';
 import { ICoordinates } from './Player';
@@ -26,11 +25,39 @@ export default class Collision{
 		for(const val of objects){
 			const object: IObject = val as IObject;
 			if((object.geometry.aabb.min.x <= next.x && object.geometry.aabb.max.x >= next.x) &&
-				(object.geometry.aabb.min.y <= next.y && object.geometry.aabb.max.y >= next.y)){
+				(object.geometry.aabb.min.y <= next.y && object.geometry.aabb.max.y >= next.y) && !object.canMove){
 				return false;
 			}
 		}
 		return true;
+	}
+
+	static hasGrass(coords: ICoordinates): boolean{
+		const objects: Set<unknown> = Collision.MAP.getNearby({
+			pos: {
+				x: coords.x,
+				y: coords.y
+			},
+			aabb: {
+				min: {
+					x: coords.x,
+					y: coords.y
+				},
+				max: {
+					x: coords.x,
+					y: coords.y
+				}
+			}
+		});
+
+		for(const val of objects){
+			const object: IObject = val as IObject;
+			if((object.geometry.aabb.min.x <= coords.x && object.geometry.aabb.max.x >= coords.x) &&
+				(object.geometry.aabb.min.y <= coords.y && object.geometry.aabb.max.y >= coords.y) && object.isGrass){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	static checkForMessage(pos: ICoordinates): string[] | null{
@@ -70,13 +97,47 @@ export default class Collision{
 			Collision.MAP.registerObject(val, val.geometry);
 		});
 	}
+
+	static checkTileObject(coords: ICoordinates): IObject | null{
+		const objects: Set<unknown> = Collision.MAP.getNearby({
+			pos: {
+				x: coords.x,
+				y: coords.y
+			},
+			aabb: {
+				min: {
+					x: coords.x,
+					y: coords.y
+				},
+				max: {
+					x: coords.x,
+					y: coords.y
+				}
+			}
+		});
+
+		for(const val of objects){
+			const object: IObject = val as IObject;
+			if((object.geometry.aabb.min.x <= coords.x && object.geometry.aabb.max.x >= coords.x) &&
+				(object.geometry.aabb.min.y <= coords.y && object.geometry.aabb.max.y >= coords.y) &&
+				(object.hasEncounter || object.isGrass || object.isWater)){
+				return object;
+			}
+		}
+
+		return null;
+	}
 }
 
-interface IObject{
+export interface IObject{
 	geometry: IGeometry;
 	door: ICoordinates | null;
 	msg: string[] | null;
 	msgLocation: ICoordinates | null;
+	canMove: boolean;
+	hasEncounter: boolean;
+	isGrass: boolean;
+	isWater: boolean;
 }
 
 interface IGeometry{

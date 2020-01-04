@@ -9,7 +9,11 @@
 		},
 		"door": { "x": 66, "y": 267 },
 		"msg": null,
-		"msgLocation": null
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false
 	},
 	{
 		"geometry": {
@@ -20,8 +24,12 @@
 			}
 		},
 		"door": null,
-		"msg": null,
-		"msgLocation": null
+		"msg": ["%PLAYER%'s house"],
+		"msgLocation": { "x": 64, "y": 267 },
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false
 	},
 	{
 		"geometry": {
@@ -33,7 +41,11 @@
 		},
 		"door": null,
 		"msg": ["Pallet Town\nShades of your journey await!"],
-		"msgLocation": { "x": 69, "y": 271 }
+		"msgLocation": { "x": 69, "y": 271 },
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false
 	},
 	{
 		"geometry": {
@@ -45,6 +57,26 @@
 		},
 		"door": null,
 		"msg": ["Trainer Tips", "Press Enter to open the Menu!"],
-		"msgLocation": { "x": 65, "y": 274 }
+		"msgLocation": { "x": 65, "y": 274 },
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 72, "y": 255 },
+			"aabb": {
+				"min": { "x": 72, "y": 255 },
+				"max": { "x": 73, "y": 259 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": true,
+		"isGrass": true,
+		"isWater": false
 	}
 ]

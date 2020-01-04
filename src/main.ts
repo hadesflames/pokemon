@@ -1,6 +1,9 @@
 import Game from './Game';
 
 window.onload = () => {
-	console.log('GAME LOADING.');
-	Game.getGame().loadGame();
+	document.getElementById('play')?.addEventListener('click', () => {
+		document.getElementById('play')?.remove();
+		console.log('GAME LOADING.');
+		Game.getGame().loadGame();
+	});
 };
