@@ -2,10 +2,10 @@ import objectData from '../../data/objects.json';
 import SpatialManager from 'spatial-hashmap';
 import { ICoordinates } from './Player';
 
-export default class Collision{
+export default class Objects{
 	private static MAP = new SpatialManager(407, 399, 25);
 	static canMove(current: ICoordinates, next: ICoordinates): boolean{
-		const objects: Set<unknown> = Collision.MAP.getNearby({
+		const objects: Set<unknown> = Objects.MAP.getNearby({
 			pos: {
 				x: current.x,
 				y: current.y
@@ -33,7 +33,7 @@ export default class Collision{
 	}
 
 	static hasGrass(coords: ICoordinates): boolean{
-		const objects: Set<unknown> = Collision.MAP.getNearby({
+		const objects: Set<unknown> = Objects.MAP.getNearby({
 			pos: {
 				x: coords.x,
 				y: coords.y
@@ -61,7 +61,7 @@ export default class Collision{
 	}
 
 	static checkForMessage(pos: ICoordinates): string[] | null{
-		const objects: Set<unknown> = Collision.MAP.getNearby({
+		const objects: Set<unknown> = Objects.MAP.getNearby({
 			pos: {
 				x: pos.x,
 				y: pos.y
@@ -94,12 +94,12 @@ export default class Collision{
 
 	static loadObjects(){
 		objectData.forEach((val: IObject) => {
-			Collision.MAP.registerObject(val, val.geometry);
+			Objects.MAP.registerObject(val, val.geometry);
 		});
 	}
 
 	static checkTileObject(coords: ICoordinates): IObject | null{
-		const objects: Set<unknown> = Collision.MAP.getNearby({
+		const objects: Set<unknown> = Objects.MAP.getNearby({
 			pos: {
 				x: coords.x,
 				y: coords.y
@@ -126,6 +126,25 @@ export default class Collision{
 		}
 
 		return null;
+	}
+
+	static getNearbyObjects(coords: ICoordinates): Set<unknown>{
+		return Objects.MAP.getNearby({
+			pos: {
+				x: coords.x,
+				y: coords.y
+			},
+			aabb: {
+				min: {
+					x: coords.x,
+					y: coords.y
+				},
+				max: {
+					x: coords.x,
+					y: coords.y
+				}
+			}
+		});
 	}
 }
 

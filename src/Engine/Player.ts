@@ -1,7 +1,7 @@
 import Common from '../util/Common';
 import Game from '../Game';
 import * as PIXI from 'pixi.js';
-import Collision from './Collision';
+import Objects from './Objects';
 import PokeText from '../util/PokeText';
 
 export class Player{
@@ -80,7 +80,7 @@ export class Player{
 		if(this.faceDirection !== direction && !this.moving){
 			this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
 			this.faceDirection = direction;
-			await Common.delay(50);
+			await Common.delay(20);
 		}
 
 		if(this.stopMove){
@@ -130,7 +130,7 @@ export class Player{
 					this.displayMessage();
 				}else{
 					const pos: ICoordinates = { x: this.coords.x, y: this.coords.y - 1 };
-					const msg = Collision.checkForMessage(pos);
+					const msg = Objects.checkForMessage(pos);
 					if(msg != null){
 						this.displayBubble();
 						this.is_reading = true;
@@ -222,7 +222,7 @@ export class Player{
 		this.screen_text_next.x = (this.screen_text ? this.screen_text.x : 0) + (this.screen_text ? this.screen_text.width : 0);
 		this.screen_text_next.y = (this.screen_text ? this.screen_text.y : 0);
 		this.screen_text_next.visible = true;
-		this.screen_text_next_timeout = setTimeout(() => this.screenTextNextAnim(), 100);
+		this.screen_text_next_timeout = setTimeout(() => this.screenTextNextAnim(), 75);
 	}
 
 	private screenTextNextAnim(){
@@ -230,7 +230,7 @@ export class Player{
 		if(((this.screen_text ? this.screen_text.y : 0) + 5) <= this.screen_text_next.y || this.screen_text_next.y === (this.screen_text ? this.screen_text.y : 0)){
 			this.screen_text_next_num *= -1;
 		}
-		this.screen_text_next_timeout = setTimeout(() => this.screenTextNextAnim(), 100);
+		this.screen_text_next_timeout = setTimeout(() => this.screenTextNextAnim(), 75);
 	}
 
 	private removeNextIndicator(){

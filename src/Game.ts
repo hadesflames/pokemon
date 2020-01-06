@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { Player, PlayerFaceDirection, ICoordinates } from './Engine/Player';
 import Common from './util/Common';
-import Collision, { IObject } from './Engine/Collision';
+import Objects, { IObject } from './Engine/Objects';
+import SceneryEngine from './Engine/SceneryEngine';
 
 export default class Game{
 	static readonly FPS: number = 60;
@@ -21,14 +22,14 @@ export default class Game{
 	private constructor(){
 		this.app = new PIXI.Application({width: 800, height: 600});
 		this.loader = new PIXI.Loader();
-		this.player = new Player('RED', 66, 268);
+		this.player = new Player('Aldo', 66, 268);
 		this.overWorld = new PIXI.Container();
 		this.overWorldSprite = this.grass_sprite = new PIXI.Sprite();
 		this.grass_sprite2 = new SkipSprite();
 		document.body.appendChild(this.app.view);
 	}
 
-	static getGame(){
+	static getGame(): Game{
 		if(Game.GAME == null){
 			Game.GAME = new Game();
 		}
@@ -43,7 +44,7 @@ export default class Game{
 
 		document.getElementById('loading')?.remove();
 		this.loading = true;
-		Collision.loadObjects();
+		Objects.loadObjects();
 		this.app.ticker.maxFPS = this.app.ticker.minFPS = Game.FPS;
 		this.loader.add('overworld', '../assets/world.png')
 					.add('char_anim', '../assets/char/char.json')
@@ -90,6 +91,7 @@ export default class Game{
 		this.loading = false;
 		console.log('GAME LOADED.');
 		this.userInput();
+		this.process();
 	}
 
 	private userInput(){
@@ -141,10 +143,15 @@ export default class Game{
 		}
 	}
 
+	async process(){
+		SceneryEngine.getSceneryEngine().process();
+		setTimeout(() => this.process(), 1);
+	}
+
 	async move(amount: number, x: boolean = true){
 		const nextCoords: ICoordinates = { x: this.player.getX() + (amount * (x ? 1 : 0)), y: this.player.getY() + (amount * (x ? 0 : 1)) };
 
-		if(!Collision.canMove(this.player.getCoords(), nextCoords)){
+		if(!Objects.canMove(this.player.getCoords(), nextCoords)){
 			await Common.delay(150);
 			return;
 		}
@@ -154,7 +161,7 @@ export default class Game{
 			this.overWorld.removeChild(this.animatedGrass);
 			this.animatedGrass = undefined;
 		}
-		if(Collision.hasGrass(nextCoords)){
+		if(Objects.hasGrass(nextCoords)){
 			await this.handlePreGrassAnimation(amount, x);
 		}else{
 			this.grass_sprite2.visible = false;
@@ -164,7 +171,7 @@ export default class Game{
 		this.player.setCoords(nextCoords);
 		await Common.delay(25);
 
-		const tile: IObject | null = Collision.checkTileObject(nextCoords);
+		const tile: IObject | null = Objects.checkTileObject(nextCoords);
 		if(tile != null){
 			if(tile.isGrass){
 				this.handleGrassAnimations();
@@ -175,7 +182,7 @@ export default class Game{
 			}
 		}
 		console.log(nextCoords);
-		await Common.delay(150);
+		await Common.delay(100);
 	}
 
 	addSprite(sprite: PIXI.DisplayObject){
@@ -202,11 +209,15 @@ export default class Game{
 		}
 	}
 
+	getPlayerCoords(): ICoordinates{
+		return this.player.getCoords();
+	}
+
 	async handlePreGrassAnimation(amount: number, x: boolean = true){
 		this.grass_sprite.x = 400 + (amount * 48 * (x ? 1 : 0));
 		this.grass_sprite.y = 348 + (amount * 48 * (x ? 0 : 1));
 		this.grass_sprite.visible = true;
-		await Common.delay(100);
+		await Common.delay(75);
 		this.grass_sprite.visible = false;
 	}
 
