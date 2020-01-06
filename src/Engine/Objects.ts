@@ -5,22 +5,7 @@ import { ICoordinates } from './Player';
 export default class Objects{
 	private static MAP = new SpatialManager(407, 399, 25);
 	static canMove(current: ICoordinates, next: ICoordinates): boolean{
-		const objects: Set<unknown> = Objects.MAP.getNearby({
-			pos: {
-				x: current.x,
-				y: current.y
-			},
-			aabb: {
-				min: {
-					x: current.x,
-					y: current.y
-				},
-				max: {
-					x: current.x,
-					y: current.y
-				}
-			}
-		});
+		const objects: Set<unknown> = Objects.getNearbyObjects(current);
 
 		for(const val of objects){
 			const object: IObject = val as IObject;
@@ -33,22 +18,7 @@ export default class Objects{
 	}
 
 	static hasGrass(coords: ICoordinates): boolean{
-		const objects: Set<unknown> = Objects.MAP.getNearby({
-			pos: {
-				x: coords.x,
-				y: coords.y
-			},
-			aabb: {
-				min: {
-					x: coords.x,
-					y: coords.y
-				},
-				max: {
-					x: coords.x,
-					y: coords.y
-				}
-			}
-		});
+		const objects: Set<unknown> = Objects.getNearbyObjects(coords);
 
 		for(const val of objects){
 			const object: IObject = val as IObject;
@@ -61,22 +31,7 @@ export default class Objects{
 	}
 
 	static checkForMessage(pos: ICoordinates): string[] | null{
-		const objects: Set<unknown> = Objects.MAP.getNearby({
-			pos: {
-				x: pos.x,
-				y: pos.y
-			},
-			aabb: {
-				min: {
-					x: pos.x,
-					y: pos.y
-				},
-				max: {
-					x: pos.x,
-					y: pos.y
-				}
-			}
-		});
+		const objects: Set<unknown> = Objects.getNearbyObjects(pos);
 
 		for(const val of objects){
 			const object: IObject = val as IObject;
@@ -99,22 +54,7 @@ export default class Objects{
 	}
 
 	static checkTileObject(coords: ICoordinates): IObject | null{
-		const objects: Set<unknown> = Objects.MAP.getNearby({
-			pos: {
-				x: coords.x,
-				y: coords.y
-			},
-			aabb: {
-				min: {
-					x: coords.x,
-					y: coords.y
-				},
-				max: {
-					x: coords.x,
-					y: coords.y
-				}
-			}
-		});
+		const objects: Set<unknown> = Objects.getNearbyObjects(coords);
 
 		for(const val of objects){
 			const object: IObject = val as IObject;
