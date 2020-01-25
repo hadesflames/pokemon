@@ -152,7 +152,9 @@ export class Player{
 				if(this.is_reading){
 					this.displayMessage();
 				}else{
-					const pos: ICoordinates = { x: this.coords.x, y: this.coords.y - 1 };
+					const xDelta: number = this.faceDirection === PlayerFaceDirection.LEFT ? -1 : (this.faceDirection === PlayerFaceDirection.RIGHT ? 1 : 0);
+					const yDelta: number = this.faceDirection === PlayerFaceDirection.UP ? -1 : (this.faceDirection === PlayerFaceDirection.DOWN ? 1 : 0);
+					const pos: ICoordinates = { x: this.coords.x + xDelta, y: this.coords.y + yDelta };
 					const msg = Objects.checkForMessage(pos);
 					if(msg != null){
 						this.displayBubble();

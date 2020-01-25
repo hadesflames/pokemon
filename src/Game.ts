@@ -99,10 +99,10 @@ export default class Game{
 			return;
 		}
 
-		const left = new Keypress('ArrowLeft', this.player);
-		const right = new Keypress('ArrowRight', this.player);
-		const down = new Keypress('ArrowDown', this.player);
-		const up = new Keypress('ArrowUp', this.player);
+		const left: Keypress = new Keypress('ArrowLeft', this.player);
+		const right: Keypress = new Keypress('ArrowRight', this.player);
+		const down: Keypress = new Keypress('ArrowDown', this.player);
+		const up: Keypress = new Keypress('ArrowUp', this.player);
 
 		left.press = (player: Player) => {
 			player.vx = -3;
@@ -147,16 +147,21 @@ export default class Game{
 				player.vy = 0;
 			}
 		};
-	}
 
-	private keyPress(e: KeyboardEvent){
-		if(e.keyCode === 97){
-			this.player.handleAPress();
-		}else if(e.keyCode === 115){
-			this.player.handleBPress();
-		}else if(e.keyCode === 13){
-			this.player.handleEnterPress();
-		}
+		const aKey: Keypress = new Keypress('a', this.player);
+		aKey.release = (player: Player) => {
+			player.handleAPress();
+		};
+
+		const bKey: Keypress = new Keypress('s', this.player);
+		bKey.release = (player: Player) => {
+			player.handleBPress();
+		};
+
+		const enter: Keypress = new Keypress('Enter', this.player);
+		enter.release = (player: Player) => {
+			player.handleEnterPress();
+		};
 	}
 
 	process(delta: number){
