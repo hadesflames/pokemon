@@ -24,7 +24,6 @@ export class Player{
 	private screen_text_next_num: number = 1;
 	public vx: number = 0;
 	public vy: number = 0;
-	private frameCount: number = 1;
 	private animateSprite: boolean = false;
 
 	constructor(name: string, x: number, y: number){
@@ -78,7 +77,6 @@ export class Player{
 		}else if(this.vy !== 0){
 			this.move(this.vy < 0 ? PlayerFaceDirection.UP : PlayerFaceDirection.DOWN);
 		}else{
-			this.frameCount = 1;
 			if(this.animatedSprite){
 				this.animatedSprite.destroy();
 				Game.getGame().removeSprite(this.animatedSprite);
@@ -98,29 +96,11 @@ export class Player{
 		if(this.faceDirection !== direction){
 			this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
 			this.faceDirection = direction;
-			if(++this.frameCount === Game.FPS + 1){
-				this.frameCount = 1;
-			}
 			this.animateSprite = true;
 			return;
 		}
 
 		const speed: number = this.vx === 0 ? this.vy : this.vx;
-		const moveFrame: number = Math.round(Game.FPS / (speed < 0 ? (speed * -1) : speed));
-		let currentMoveFrame: number = moveFrame;
-		let canMove: boolean = false;
-		do{
-			if(currentMoveFrame === this.frameCount){
-				canMove = true;
-				break;
-			}
-			currentMoveFrame += moveFrame;
-		}while(currentMoveFrame < Game.FPS);
-
-		if(++this.frameCount === Game.FPS + 1){
-			this.frameCount = 1;
-		}
-
 		this.sprite.visible = false;
 		if(this.animateSprite || !this.animatedSprite){
 			if(this.animatedSprite){
@@ -138,11 +118,7 @@ export class Player{
 			Game.getGame().addSprite(this.animatedSprite);
 			this.animateSprite = false;
 		}
-
-		if(canMove){
-			Game.getGame().move(direction === PlayerFaceDirection.DOWN || direction === PlayerFaceDirection.RIGHT ? 1 : -1,
-										direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
-		}
+		Game.getGame().move((1 / speed), direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
 	}
 
 	handleAPress(){

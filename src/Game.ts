@@ -105,45 +105,45 @@ export default class Game{
 		const up: Keypress = new Keypress('ArrowUp', this.player);
 
 		left.press = (player: Player) => {
-			player.vx = -3;
+			player.vx = -25;
 			player.vy = 0;
 		};
 
 		left.release = (player: Player) => {
-			if(!right.isDownPressed() && player.vy === 0){
+			if(!right.isDownPressed()){
 				player.vx = 0;
 			}
 		};
 
 		right.press = (player: Player) => {
-			player.vx = 3;
+			player.vx = 25;
 			player.vy = 0;
 		};
 
 		right.release = (player: Player) => {
-			if(!left.isDownPressed() && player.vy === 0){
+			if(!left.isDownPressed()){
 				player.vx = 0;
 			}
 		};
 
 		up.press = (player: Player) => {
 			player.vx = 0;
-			player.vy = -3;
+			player.vy = -25;
 		};
 
 		up.release = (player: Player) => {
-			if(!down.isDownPressed() && player.vx === 0){
+			if(!down.isDownPressed()){
 				player.vy = 0;
 			}
 		};
 
 		down.press = (player: Player) => {
 			player.vx = 0;
-			player.vy = 3;
+			player.vy = 25;
 		};
 
 		down.release = (player: Player) => {
-			if(!up.isDownPressed() && player.vx === 0){
+			if(!up.isDownPressed()){
 				player.vy = 0;
 			}
 		};
