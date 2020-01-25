@@ -12,10 +12,6 @@ export class Player{
 	private animatedSprite: PIXI.AnimatedSprite | null;
 	private spriteTextures: PIXI.ITextureDictionary;
 	private spriteSheet: PIXI.Spritesheet | null;
-	private moving: boolean = false;
-	private isMoving: boolean = false;
-	private stopMove: boolean = false;
-	private changeDirectionCommand: boolean = false;
 	private inOverWorld: boolean = true;
 	private menuOpen: boolean = false;
 	private text_bubble: PIXI.Sprite[] = [];
@@ -26,6 +22,10 @@ export class Player{
 	private screen_text_next: PIXI.Sprite = new PIXI.Sprite();
 	private screen_text_next_timeout?: number;
 	private screen_text_next_num: number = 1;
+	public vx: number = 0;
+	public vy: number = 0;
+	private frameCount: number = 1;
+	private animateSprite: boolean = false;
 
 	constructor(name: string, x: number, y: number){
 		this.name = name;
@@ -72,54 +72,77 @@ export class Player{
 		return this.coords.y;
 	}
 
-	async move(direction: PlayerFaceDirection){
-		if(this.isMoving || this.changeDirectionCommand || this.is_reading){
-			return;
+	handleMove(){
+		if(this.vx !== 0 || this.vy !== 0){
+			console.log('moving');
 		}
+		if(this.vx !== 0){
+			this.move(this.vx < 0 ? PlayerFaceDirection.LEFT : PlayerFaceDirection.RIGHT);
+		}else if(this.vy !== 0){
+			this.move(this.vy < 0 ? PlayerFaceDirection.UP : PlayerFaceDirection.DOWN);
+		}else{
+			this.frameCount = 1;
+			if(this.animatedSprite){
+				this.animatedSprite.destroy();
+				Game.getGame().removeSprite(this.animatedSprite);
+				this.animatedSprite = null;
+			}
 
-		if(this.faceDirection !== direction && !this.moving){
 			this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
-			this.faceDirection = direction;
-			await Common.delay(20);
+			this.sprite.visible = true;
 		}
-
-		if(this.stopMove){
-			this.stopMove = false;
-			return;
-		}
-
-		if(!this.moving){
-			this.sprite.visible = false;
-			Game.getGame().removeSprite(this.animatedSprite as PIXI.AnimatedSprite);
-			this.animatedSprite = new PIXI.AnimatedSprite(this.spriteSheet?.animations[PlayerFaceDirectionTexture[direction]]);
-			this.animatedSprite.name = 'PLAYER';
-			this.animatedSprite.animationSpeed = 4 / Game.FPS; // 4fps
-			this.animatedSprite.scale.set(3, 3);
-			this.animatedSprite.zIndex = 1;
-			this.animatedSprite.play();
-			this.animatedSprite.x = 400;
-			this.animatedSprite.y = 300;
-			Game.getGame().addSprite(this.animatedSprite);
-		}
-
-		this.moving = this.isMoving = true;
-		await Game.getGame().move(direction === PlayerFaceDirection.DOWN || direction === PlayerFaceDirection.RIGHT ? 1 : -1,
-									direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
-		this.isMoving = false;
-		this.stopMove = false;
 	}
 
-	stopMovement(){
-		if(this.animatedSprite){
-			this.animatedSprite.destroy();
-			Game.getGame().removeSprite(this.animatedSprite);
-			this.animatedSprite = null;
+	move(direction: PlayerFaceDirection){
+		if(this.is_reading){
+			return;
 		}
 
-		this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
-		this.sprite.visible = true;
-		this.moving = this.isMoving = false;
-		this.stopMove = true;
+		if(this.faceDirection !== direction){
+			this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
+			this.faceDirection = direction;
+			if(++this.frameCount === Game.FPS + 1){
+				this.frameCount = 1;
+			}
+			this.animateSprite = true;
+			return;
+		}
+
+		const speed: number = this.vx === 0 ? this.vy : this.vx;
+		const moveFrame: number = Math.round(Game.FPS / (speed < 0 ? (speed * -1) : speed));
+		let currentMoveFrame: number = moveFrame;
+		let canMove: boolean = false;
+		do{
+			if(currentMoveFrame === this.frameCount){
+				canMove = true;
+				break;
+			}
+			currentMoveFrame += moveFrame;
+		}while(currentMoveFrame < Game.FPS);
+
+		if(++this.frameCount === Game.FPS + 1){
+			this.frameCount = 1;
+		}
+
+		if(canMove){
+			this.sprite.visible = false;
+			if(this.animateSprite){
+				Game.getGame().removeSprite(this.animatedSprite as PIXI.AnimatedSprite);
+				this.animatedSprite = new PIXI.AnimatedSprite(this.spriteSheet?.animations[PlayerFaceDirectionTexture[direction]]);
+				this.animatedSprite.name = 'PLAYER';
+				this.animatedSprite.animationSpeed = 4 / Game.FPS; // 4fps
+				this.animatedSprite.scale.set(3, 3);
+				this.animatedSprite.zIndex = 1;
+				this.animatedSprite.play();
+				this.animatedSprite.x = 400;
+				this.animatedSprite.y = 300;
+				Game.getGame().addSprite(this.animatedSprite);
+				this.animateSprite = false;
+			}
+
+			Game.getGame().move(direction === PlayerFaceDirection.DOWN || direction === PlayerFaceDirection.RIGHT ? 1 : -1,
+										direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
+		}
 	}
 
 	handleAPress(){

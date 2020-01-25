@@ -3,6 +3,7 @@ import { Player, PlayerFaceDirection, ICoordinates } from './Engine/Player';
 import Common from './util/Common';
 import Objects, { IObject } from './Engine/Objects';
 import SceneryEngine from './Engine/SceneryEngine';
+import Keypress from './Engine/Keypress';
 
 export default class Game{
 	static readonly FPS: number = 60;
@@ -45,7 +46,6 @@ export default class Game{
 		document.getElementById('loading')?.remove();
 		this.loading = true;
 		Objects.loadObjects();
-		this.app.ticker.maxFPS = this.app.ticker.minFPS = Game.FPS;
 		this.loader.add('overworld', '../assets/world.png')
 					.add('char_anim', '../assets/char/char.json')
 					.add('tall_grass', '../assets/tall_grass/tall_grass.json')
@@ -91,7 +91,7 @@ export default class Game{
 		this.loading = false;
 		console.log('GAME LOADED.');
 		this.userInput();
-		this.process();
+		this.app.ticker.add((delta: number) => this.process(delta));
 	}
 
 	private userInput(){
@@ -99,11 +99,54 @@ export default class Game{
 			return;
 		}
 
-		document.addEventListener('keypress', (e: KeyboardEvent) => this.keyPress(e));
+		const left = new Keypress('ArrowLeft', this.player);
+		const right = new Keypress('ArrowRight', this.player);
+		const down = new Keypress('ArrowDown', this.player);
+		const up = new Keypress('ArrowUp', this.player);
 
-		document.addEventListener('keydown', (e: KeyboardEvent) => this.keyDown(e));
+		left.press = (player: Player) => {
+			player.vx = -3;
+			player.vy = 0;
+		};
 
-		document.addEventListener('keyup', (e: KeyboardEvent) => this.keyUp(e));
+		left.release = (player: Player) => {
+			if(!right.isDownPressed() && player.vy === 0){
+				player.vx = 0;
+			}
+		};
+
+		right.press = (player: Player) => {
+			player.vx = 3;
+			player.vy = 0;
+		};
+
+		right.release = (player: Player) => {
+			if(!left.isDownPressed() && player.vy === 0){
+				player.vx = 0;
+			}
+		};
+
+		up.press = (player: Player) => {
+			player.vx = 0;
+			player.vy = -3;
+		};
+
+		up.release = (player: Player) => {
+			if(!down.isDownPressed() && player.vx === 0){
+				player.vy = 0;
+			}
+		};
+
+		down.press = (player: Player) => {
+			player.vx = 0;
+			player.vy = 3;
+		};
+
+		down.release = (player: Player) => {
+			if(!up.isDownPressed() && player.vx === 0){
+				player.vy = 0;
+			}
+		};
 	}
 
 	private keyPress(e: KeyboardEvent){
@@ -116,43 +159,15 @@ export default class Game{
 		}
 	}
 
-	private keyDown(e: KeyboardEvent){
-		// Movement
-		if(e.keyCode >= 37 && e.keyCode <= 40){
-			switch(e.keyCode){
-				case PlayerFaceDirection.LEFT:
-					this.player.move(PlayerFaceDirection.LEFT);
-					break;
-				case PlayerFaceDirection.UP:
-					this.player.move(PlayerFaceDirection.UP);
-					break;
-				case PlayerFaceDirection.RIGHT:
-					this.player.move(PlayerFaceDirection.RIGHT);
-					break;
-				case PlayerFaceDirection.DOWN:
-					this.player.move(PlayerFaceDirection.DOWN);
-					break;
-			}
-		}
-	}
-
-	private keyUp(e: KeyboardEvent){
-		// Movement
-		if(e.keyCode >= 37 && e.keyCode <= 40){
-			this.player.stopMovement();
-		}
-	}
-
-	async process(){
+	process(delta: number){
+		this.player.handleMove();
 		SceneryEngine.getSceneryEngine().process();
-		setTimeout(() => this.process(), 1);
 	}
 
-	async move(amount: number, x: boolean = true){
+	move(amount: number, x: boolean = true){
 		const nextCoords: ICoordinates = { x: this.player.getX() + (amount * (x ? 1 : 0)), y: this.player.getY() + (amount * (x ? 0 : 1)) };
 
 		if(!Objects.canMove(this.player.getCoords(), nextCoords)){
-			await Common.delay(150);
 			return;
 		}
 
@@ -162,14 +177,13 @@ export default class Game{
 			this.animatedGrass = undefined;
 		}
 		if(Objects.hasGrass(nextCoords)){
-			await this.handlePreGrassAnimation(amount, x);
+			this.handlePreGrassAnimation(amount, x);
 		}else{
 			this.grass_sprite2.visible = false;
 		}
 
 		this.moveObjects(amount, x);
 		this.player.setCoords(nextCoords);
-		await Common.delay(25);
 
 		const tile: IObject | null = Objects.checkTileObject(nextCoords);
 		if(tile != null){
@@ -182,7 +196,6 @@ export default class Game{
 			}
 		}
 		console.log(nextCoords);
-		await Common.delay(100);
 	}
 
 	addSprite(sprite: PIXI.DisplayObject){
