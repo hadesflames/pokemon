@@ -73,9 +73,6 @@ export class Player{
 	}
 
 	handleMove(){
-		if(this.vx !== 0 || this.vy !== 0){
-			console.log('moving');
-		}
 		if(this.vx !== 0){
 			this.move(this.vx < 0 ? PlayerFaceDirection.LEFT : PlayerFaceDirection.RIGHT);
 		}else if(this.vy !== 0){
@@ -124,22 +121,25 @@ export class Player{
 			this.frameCount = 1;
 		}
 
-		if(canMove){
-			this.sprite.visible = false;
-			if(this.animateSprite){
+		this.sprite.visible = false;
+		if(this.animateSprite || !this.animatedSprite){
+			if(this.animatedSprite){
 				Game.getGame().removeSprite(this.animatedSprite as PIXI.AnimatedSprite);
-				this.animatedSprite = new PIXI.AnimatedSprite(this.spriteSheet?.animations[PlayerFaceDirectionTexture[direction]]);
-				this.animatedSprite.name = 'PLAYER';
-				this.animatedSprite.animationSpeed = 4 / Game.FPS; // 4fps
-				this.animatedSprite.scale.set(3, 3);
-				this.animatedSprite.zIndex = 1;
-				this.animatedSprite.play();
-				this.animatedSprite.x = 400;
-				this.animatedSprite.y = 300;
-				Game.getGame().addSprite(this.animatedSprite);
-				this.animateSprite = false;
 			}
 
+			this.animatedSprite = new PIXI.AnimatedSprite(this.spriteSheet?.animations[PlayerFaceDirectionTexture[direction]]);
+			this.animatedSprite.name = 'PLAYER';
+			this.animatedSprite.animationSpeed = 6 / Game.FPS; // 4fps
+			this.animatedSprite.scale.set(3, 3);
+			this.animatedSprite.zIndex = 1;
+			this.animatedSprite.play();
+			this.animatedSprite.x = 400;
+			this.animatedSprite.y = 300;
+			Game.getGame().addSprite(this.animatedSprite);
+			this.animateSprite = false;
+		}
+
+		if(canMove){
 			Game.getGame().move(direction === PlayerFaceDirection.DOWN || direction === PlayerFaceDirection.RIGHT ? 1 : -1,
 										direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
 		}
