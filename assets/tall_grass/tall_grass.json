@@ -2,43 +2,43 @@
 
 "1":
 {
-	"frame": {"x":0,"y":0,"w":18,"h":18},
+	"frame": {"x":0,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
-	"sourceSize": {"w":18,"h":18}
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 },
 "2":
 {
-	"frame": {"x":18,"y":0,"w":18,"h":18},
+	"frame": {"x":16,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
-	"sourceSize": {"w":18,"h":18}
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 },
 "3":
 {
-	"frame": {"x":36,"y":0,"w":18,"h":18},
+	"frame": {"x":32,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
-	"sourceSize": {"w":18,"h":18}
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 },
 "4":
 {
-	"frame": {"x":54,"y":0,"w":18,"h":18},
+	"frame": {"x":48,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
-	"sourceSize": {"w":18,"h":18}
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 },
 "init":
 {
-	"frame": {"x":72,"y":0,"w":18,"h":18},
+	"frame": {"x":64,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
-	"sourceSize": {"w":18,"h":18}
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 }},
 "animations": {
 	"anim": ["1","2","3","4"]
@@ -46,7 +46,7 @@
 "meta": {
 	"image": "tall_grass.png",
 	"format": "RGBA8888",
-	"size": {"w":90,"h":18},
+	"size": {"w":80,"h":16},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:ee943f7c2ab4d06bb66503b5847d6a35:ef816f2ab6a527dc70e49301fa428c75:f90703ed71e63ee293edbacbb54e6d17$"
 }

@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { Player, PlayerFaceDirection, ICoordinates } from './Engine/Player';
+import { Player, ICoordinates } from './Engine/Player';
 import Common from './util/Common';
 import Objects, { IObject } from './Engine/Objects';
 import SceneryEngine from './Engine/SceneryEngine';
@@ -16,9 +16,6 @@ export default class Game{
 	private player: Player;
 	private overWorld: PIXI.Container;
 	private overWorldSprite: PIXI.Sprite;
-	private animatedGrass?: PIXI.AnimatedSprite;
-	private grass_sprite: PIXI.Sprite;
-	private grass_sprite2: SkipSprite;
 	private last_move: number = 0;
 	private last_move_x: boolean = false;
 
@@ -27,8 +24,7 @@ export default class Game{
 		this.loader = new PIXI.Loader();
 		this.player = new Player('Aldo', 66, 268);
 		this.overWorld = new PIXI.Container();
-		this.overWorldSprite = this.grass_sprite = new PIXI.Sprite();
-		this.grass_sprite2 = new SkipSprite();
+		this.overWorldSprite = new PIXI.Sprite();
 		document.body.appendChild(this.app.view);
 	}
 
@@ -38,6 +34,13 @@ export default class Game{
 		}
 
 		return Game.GAME;
+	}
+
+	getScreenPosition(): ICoordinates{
+		return {
+			x: this.overWorldSprite.x,
+			y: this.overWorldSprite.y
+		};
 	}
 
 	loadGame(){
@@ -72,21 +75,8 @@ export default class Game{
 
 		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources.char_anim);
 
-		this.grass_sprite = new PIXI.Sprite(this.loader.resources.tall_grass.textures?.init);
-		this.grass_sprite.scale.set(3, 3);
-		this.grass_sprite.zIndex = 0;
-
-		this.grass_sprite2 = new SkipSprite((this.loader.resources.tall_grass.textures as PIXI.ITextureDictionary)['4']);
-		this.grass_sprite2.x = 400;
-		this.grass_sprite2.y = 348;
-		this.grass_sprite2.zIndex = 3;
-		this.grass_sprite2.scale.set(3, 3);
-		this.grass_sprite.visible = this.grass_sprite2.visible = false;
-
 		this.overWorld.addChild(this.overWorldSprite);
 		this.overWorld.addChild(playerSprite);
-		this.overWorld.addChild(this.grass_sprite);
-		this.overWorld.addChild(this.grass_sprite2);
 		this.overWorld.updateTransform();
 
 		this.loaded = true;
@@ -196,8 +186,7 @@ export default class Game{
 		this.moveObjects(amount, x);
 		const correctOverworld: ICoordinates = { x: 400 + (nextCoords.x * -48), y: 349 + (nextCoords.y * -48) };
 		if(correctOverworld.x === this.overWorldSprite.x && correctOverworld.y === this.overWorldSprite.y){
-			this.player.setCoords(nextCoords);
-			this.player.doneMoving();
+			this.player.doneMoving(nextCoords);
 			const tile: IObject | null = Objects.checkTileObject(nextCoords);
 			if(tile != null){
 				if(tile.hasEncounter){
@@ -240,33 +229,8 @@ export default class Game{
 		return this.player.getCoords();
 	}
 
-	async handlePreGrassAnimation(amount: number, x: boolean = true){
-		this.grass_sprite.x = 400 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
-		this.grass_sprite.y = 348 + ((amount > 0 ? 1 : -1) * 48 * (x ? 0 : 1));
-		this.grass_sprite.visible = true;
-		await Common.delay(20);
-		this.grass_sprite.visible = false;
-	}
-
-	handleGrassAnimations(){
-		this.grass_sprite2.visible = true;
-		this.grass_sprite2.skipMove = true;
-		this.animatedGrass = new PIXI.AnimatedSprite(this.loader.resources.tall_grass.spritesheet?.animations.anim);
-		this.animatedGrass.loop = false;
-		this.animatedGrass.x = 400;
-		this.animatedGrass.y = 348;
-		this.animatedGrass.zIndex = 3;
-		this.animatedGrass.scale.set(3, 3);
-		this.animatedGrass.animationSpeed = 10 / Game.FPS; // 4fps
-		this.animatedGrass.onComplete = () => {
-			if(this.animatedGrass != null){
-				this.animatedGrass.destroy();
-				Game.getGame().removeSprite(this.animatedGrass);
-				this.animatedGrass = undefined;
-			}
-		};
-		this.animatedGrass.play();
-		this.overWorld.addChild(this.animatedGrass);
+	getPlayerMovingTo(): ICoordinates | null{
+		return this.player.getMovingTo();
 	}
 
 	handleEncounter(){
@@ -283,7 +247,7 @@ export default class Game{
 	}
 }
 
-class SkipSprite extends PIXI.Sprite{
+export class SkipSprite extends PIXI.Sprite{
 	public skipMove: boolean = false;
 	constructor(texture?: PIXI.Texture){
 		super(texture);

@@ -1,13 +1,15 @@
 import Common from '../util/Common';
 import Game from '../Game';
 import * as PIXI from 'pixi.js';
-import Objects from './Objects';
+import Objects, { IObject } from './Objects';
 import PokeText from '../util/PokeText';
+import SceneryEngine from './SceneryEngine';
 
 export class Player{
 	private name: string;
 	private faceDirection: PlayerFaceDirection;
 	private coords: ICoordinates;
+	private movingTo: ICoordinates | null = null;
 	private sprite: PIXI.Sprite;
 	private animatedSprite: PIXI.AnimatedSprite | null;
 	private spriteTextures: PIXI.ITextureDictionary;
@@ -74,6 +76,14 @@ export class Player{
 		return this.coords.y;
 	}
 
+	getMovingTo(): ICoordinates | null{
+		return this.movingTo;
+	}
+
+	setMovingTo(movingTo: ICoordinates){
+		this.movingTo = movingTo;
+	}
+
 	handleMove(){
 		if(this.isMoving){
 			this.move(this.faceDirection);
@@ -96,8 +106,17 @@ export class Player{
 		}
 	}
 
-	doneMoving(){
+	doneMoving(nextCoords?: ICoordinates){
+		if(nextCoords){
+			this.setCoords(nextCoords);
+		}
+
 		this.isMoving = false;
+		this.movingTo = null;
+		const tile: IObject | null = Objects.checkTileObject(this.coords);
+		if(tile == null || !tile.isGrass){
+			SceneryEngine.getSceneryEngine().removeGrassSprite();
+		}
 	}
 
 	move(direction: PlayerFaceDirection){
@@ -111,6 +130,7 @@ export class Player{
 		}
 
 		if(this.isMoving){
+			this.movingTo = null;
 			Game.getGame().move(0, null);
 			return;
 		}
@@ -123,8 +143,13 @@ export class Player{
 			return;
 		}
 
-		this.isMoving = true;
 		const speed: number = this.vx === 0 ? this.vy : this.vx;
+		const movingX: boolean = direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT;
+		this.isMoving = true;
+		this.movingTo = {
+			x: this.coords.x + ((speed > 0 ? 1 : -1) * (movingX ? 1 : 0)),
+			y: this.coords.y + ((speed > 0 ? 1 : -1) * (movingX ? 0 : 1))
+		};
 		this.sprite.visible = false;
 		if(this.animateSprite || !this.animatedSprite){
 			if(this.animatedSprite){
@@ -142,7 +167,8 @@ export class Player{
 			Game.getGame().addSprite(this.animatedSprite);
 			this.animateSprite = false;
 		}
-		Game.getGame().move((1 / speed), direction === PlayerFaceDirection.LEFT || direction === PlayerFaceDirection.RIGHT);
+		SceneryEngine.getSceneryEngine().removeGrassSprite();
+		Game.getGame().move((1 / speed), movingX);
 	}
 
 	handleAPress(){
