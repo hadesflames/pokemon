@@ -19,6 +19,8 @@ export default class Game{
 	private animatedGrass?: PIXI.AnimatedSprite;
 	private grass_sprite: PIXI.Sprite;
 	private grass_sprite2: SkipSprite;
+	private last_move: number = 0;
+	private last_move_x: boolean = false;
 
 	private constructor(){
 		this.app = new PIXI.Application({width: 800, height: 600});
@@ -169,38 +171,40 @@ export default class Game{
 		SceneryEngine.getSceneryEngine().process();
 	}
 
-	move(amount: number, x: boolean = true){
-		const nextCoords: ICoordinates = { x: this.player.getX() + (amount * (x ? 1 : 0)), y: this.player.getY() + (amount * (x ? 0 : 1)) };
+	move(amount: number, x: boolean | null = true){
+		if(x == null){
+			x = this.last_move_x;
+		}else{
+			this.last_move_x = x;
+		}
+		if(amount !== 0){
+			this.last_move = amount;
+		}else{
+			amount = this.last_move;
+		}
+
+		const nextCoords: ICoordinates = {
+			x: this.player.getX() + ((amount > 0 ? 1 : -1) * (x ? 1 : 0)),
+			y: this.player.getY() + ((amount > 0 ? 1 : -1) * (x ? 0 : 1))
+		};
 
 		if(!Objects.canMove(this.player.getCoords(), nextCoords)){
+			this.player.doneMoving();
 			return;
 		}
 
-		if(this.animatedGrass != null){
-			this.animatedGrass.destroy();
-			this.overWorld.removeChild(this.animatedGrass);
-			this.animatedGrass = undefined;
-		}
-		if(Objects.hasGrass(nextCoords)){
-			this.handlePreGrassAnimation(amount, x);
-		}else{
-			this.grass_sprite2.visible = false;
-		}
-
 		this.moveObjects(amount, x);
-		this.player.setCoords(nextCoords);
-
-		const tile: IObject | null = Objects.checkTileObject(nextCoords);
-		if(tile != null){
-			if(tile.isGrass){
-				this.handleGrassAnimations();
-			}
-
-			if(tile.hasEncounter){
-				this.handleEncounter();
+		const correctOverworld: ICoordinates = { x: 400 + (nextCoords.x * -48), y: 349 + (nextCoords.y * -48) };
+		if(correctOverworld.x === this.overWorldSprite.x && correctOverworld.y === this.overWorldSprite.y){
+			this.player.setCoords(nextCoords);
+			this.player.doneMoving();
+			const tile: IObject | null = Objects.checkTileObject(nextCoords);
+			if(tile != null){
+				if(tile.hasEncounter){
+					this.handleEncounter();
+				}
 			}
 		}
-		console.log(nextCoords);
 	}
 
 	addSprite(sprite: PIXI.DisplayObject){
@@ -212,6 +216,7 @@ export default class Game{
 	}
 
 	moveObjects(amount: number, x: boolean = true){
+		amount *= 100;
 		for(const child of this.overWorld.children){
 			if(child.name === 'PLAYER' || !child.visible){
 				continue;
@@ -222,8 +227,12 @@ export default class Game{
 				sChild.skipMove = false;
 				continue;
 			}
+			child.x *= 100;
+			child.y *= 100;
 			child.x -= amount * 48 * (x ? 1 : 0);
 			child.y -= amount * 48 * (x ? 0 : 1);
+			child.x = Math.round(child.x / 100);
+			child.y = Math.round(child.y / 100);
 		}
 	}
 
@@ -232,14 +241,14 @@ export default class Game{
 	}
 
 	async handlePreGrassAnimation(amount: number, x: boolean = true){
-		this.grass_sprite.x = 400 + (amount * 48 * (x ? 1 : 0));
-		this.grass_sprite.y = 348 + (amount * 48 * (x ? 0 : 1));
+		this.grass_sprite.x = 400 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
+		this.grass_sprite.y = 348 + ((amount > 0 ? 1 : -1) * 48 * (x ? 0 : 1));
 		this.grass_sprite.visible = true;
-		await Common.delay(75);
+		await Common.delay(20);
 		this.grass_sprite.visible = false;
 	}
 
-	async handleGrassAnimations(){
+	handleGrassAnimations(){
 		this.grass_sprite2.visible = true;
 		this.grass_sprite2.skipMove = true;
 		this.animatedGrass = new PIXI.AnimatedSprite(this.loader.resources.tall_grass.spritesheet?.animations.anim);

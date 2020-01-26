@@ -24,6 +24,9 @@ export class Player{
 	private screen_text_next_num: number = 1;
 	public vx: number = 0;
 	public vy: number = 0;
+	private isMoving: boolean = false;
+	public stopMove: boolean = false;
+	private holdMove: number = 0;
 	private animateSprite: boolean = false;
 
 	constructor(name: string, x: number, y: number){
@@ -72,6 +75,11 @@ export class Player{
 	}
 
 	handleMove(){
+		if(this.isMoving){
+			this.move(this.faceDirection);
+			return;
+		}
+
 		if(this.vx !== 0){
 			this.move(this.vx < 0 ? PlayerFaceDirection.LEFT : PlayerFaceDirection.RIGHT);
 		}else if(this.vy !== 0){
@@ -88,8 +96,22 @@ export class Player{
 		}
 	}
 
+	doneMoving(){
+		this.isMoving = false;
+	}
+
 	move(direction: PlayerFaceDirection){
-		if(this.is_reading){
+		if(this.is_reading || this.holdMove > 0){
+			this.holdMove--;
+			if(this.holdMove < 0){
+				this.holdMove = 0;
+			}
+
+			return;
+		}
+
+		if(this.isMoving){
+			Game.getGame().move(0, null);
 			return;
 		}
 
@@ -97,9 +119,11 @@ export class Player{
 			this.sprite.texture = this.spriteTextures[PlayerFaceDirectionTexture[this.faceDirection]];
 			this.faceDirection = direction;
 			this.animateSprite = true;
+			this.holdMove = 4;
 			return;
 		}
 
+		this.isMoving = true;
 		const speed: number = this.vx === 0 ? this.vy : this.vx;
 		this.sprite.visible = false;
 		if(this.animateSprite || !this.animatedSprite){
