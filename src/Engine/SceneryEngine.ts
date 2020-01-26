@@ -12,7 +12,7 @@ export default class SceneryEngine{
 		this.grass_sprite_end = new SkipSprite((Game.getGame().getResource('tall_grass')?.textures as PIXI.ITextureDictionary)['4']);
 		this.grass_sprite_end.skipMove = true;
 		this.grass_sprite_end.zIndex = 3;
-		this.grass_sprite_end.x = 397;
+		this.grass_sprite_end.x = 400;
 		this.grass_sprite_end.y = 348;
 		this.grass_sprite_end.scale.set(3, 3);
 		this.grass_sprite_end.visible = false;
@@ -98,7 +98,7 @@ export default class SceneryEngine{
 			const grass_sprite = new PositionedSprite(movingTo, Game.getGame().getResource('tall_grass')?.textures?.init);
 			grass_sprite.scale.set(3, 3);
 			grass_sprite.zIndex = 0;
-			grass_sprite.x = 397 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
+			grass_sprite.x = 400 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
 			grass_sprite.y = 348 + ((amount > 0 ? 1 : -1) * 48 * (x ? 0 : 1));
 			grass_sprite.visible = true;
 
