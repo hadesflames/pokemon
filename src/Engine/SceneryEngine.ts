@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Objects, { IObject } from './Objects';
 import Game, { SkipSprite } from '../Game';
-import { ICoordinates } from './Player';
+import { ICoordinates, Rectangle } from '../util/Geometry';
 
 export default class SceneryEngine{
 	private static SceneryEngine: SceneryEngine;
@@ -64,15 +64,39 @@ export default class SceneryEngine{
 			}
 		}
 		this.drawnSprites = newDrawnSprites;
-		/*const playerCoords: ICoordinates = Game.getGame().getPlayerCoords();
-		const objs: Set<unknown> = Objects.getNearbyObjects(playerCoords);
-		for(const obj of objs){
-			const gameObject: IObject = obj as IObject;
-			if((gameObject.geometry.pos.x >= playerCoords.x - 9 && gameObject.geometry.pos.x <= playerCoords.x + 8) &&
-				(gameObject.geometry.pos.y >= playerCoords.y - 8 && gameObject.geometry.pos.y >= playerCoords.y + 6) && !this.isDrawn(gameObject.geometry.pos)){
-				// Draw scenery.
+		if(!Game.getGame().isPlayerMoving()){
+			const playerCoords: ICoordinates = Game.getGame().getPlayerCoords();
+			const objs: Set<unknown> = Objects.getNearbyObjects(playerCoords);
+			for(const obj of objs){
+				const gameObject: IObject = obj as IObject;
+				if(gameObject.sprite && this.onScreen(gameObject, playerCoords) && !this.isDrawn(gameObject.geometry.pos)){
+					const resource: PIXI.LoaderResource | null = Game.getGame().getResource(gameObject.sprite);
+					if(resource){
+						const sprite: PIXI.Sprite | PIXI.AnimatedSprite = gameObject.isAnimated ?
+																			new PIXI.AnimatedSprite(resource.spritesheet?.animations.anim) :
+																			new PIXI.Sprite(resource.texture);
+						const xDelta: number = gameObject.geometry.pos.x - playerCoords.x;
+						const yDelta: number = gameObject.geometry.pos.y - playerCoords.y;
+						sprite.x = 400 + (48 * xDelta) + (gameObject.geometry.delta ? gameObject.geometry.delta.x : 0);
+						sprite.y = 348 + (48 * yDelta) + (gameObject.geometry.delta ? gameObject.geometry.delta.y : 0);
+						sprite.zIndex = 3;
+						sprite.scale.set(3, 3);
+						if(gameObject.isAnimated){
+							(sprite as PIXI.AnimatedSprite).loop = true;
+						}
+						Game.getGame().addSprite(sprite);
+						const key: string = gameObject.geometry.pos.x + ',' + gameObject.geometry.pos.y;
+						this.onscreen[key] = gameObject;
+					}
+				}
 			}
-		}*/
+		}
+	}
+
+	private onScreen(obj: IObject, playerCoords: ICoordinates): boolean{
+		const screen: Rectangle = new Rectangle(playerCoords.x - 9, playerCoords.y - 8, 17, 13);
+		const objRect: Rectangle = Rectangle.fromObject(obj);
+		return screen.intersects(objRect);
 	}
 
 	private isDrawn(coords: ICoordinates): boolean{

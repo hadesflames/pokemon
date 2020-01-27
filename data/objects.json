@@ -2,6 +2,25 @@
 	{
 		"geometry": {
 			"pos": { "x": 65, "y": 264 },
+			"delta": { "x": 0, "y": -24 },
+			"aabb": {
+				"min": { "x": 65, "y": 264 },
+				"max": { "x": 69, "y": 265 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "red_house_roof",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 65, "y": 264 },
 			"aabb": {
 				"min": { "x": 65, "y": 264 },
 				"max": { "x": 69, "y": 267 }
@@ -13,7 +32,9 @@
 		"canMove": false,
 		"hasEncounter": false,
 		"isGrass": false,
-		"isWater": false
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
 	},
 	{
 		"geometry": {
@@ -29,7 +50,9 @@
 		"canMove": false,
 		"hasEncounter": false,
 		"isGrass": false,
-		"isWater": false
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
 	},
 	{
 		"geometry": {
@@ -45,7 +68,9 @@
 		"canMove": false,
 		"hasEncounter": false,
 		"isGrass": false,
-		"isWater": false
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
 	},
 	{
 		"geometry": {
@@ -61,7 +86,9 @@
 		"canMove": false,
 		"hasEncounter": false,
 		"isGrass": false,
-		"isWater": false
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
 	},
 	{
 		"geometry": {
@@ -77,6 +104,80 @@
 		"canMove": true,
 		"hasEncounter": true,
 		"isGrass": true,
-		"isWater": false
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 60, "y": 258 },
+			"aabb": {
+				"min": { "x": 60, "y": 258 },
+				"max": { "x": 71, "y": 261 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 71, "y": 257 },
+			"aabb": {
+				"min": { "x": 71, "y": 257 },
+				"max": { "x": 71, "y": 257 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 62, "y": 256 },
+			"aabb": {
+				"min": { "x": 62, "y": 256 },
+				"max": { "x": 71, "y": 256 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 60, "y": 262 },
+			"aabb": {
+				"min": { "x": 60, "y": 262 },
+				"max": { "x": 61, "y": 279 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
 	}
 ]

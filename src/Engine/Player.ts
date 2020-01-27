@@ -3,6 +3,7 @@ import Game from '../Game';
 import * as PIXI from 'pixi.js';
 import Objects, { IObject } from './Objects';
 import PokeText from '../util/PokeText';
+import { ICoordinates } from '../util/Geometry';
 import SceneryEngine from './SceneryEngine';
 
 export class Player{
@@ -84,6 +85,10 @@ export class Player{
 		this.movingTo = movingTo;
 	}
 
+	isPlayerMoving(): boolean{
+		return this.isMoving;
+	}
+
 	handleMove(){
 		if(this.isMoving){
 			this.move(this.faceDirection);
@@ -117,6 +122,7 @@ export class Player{
 		if(tile == null || !tile.isGrass){
 			SceneryEngine.getSceneryEngine().removeGrassSprite();
 		}
+		console.log('x: ' + this.coords.x + ', y: ' + this.coords.y);
 	}
 
 	move(direction: PlayerFaceDirection){
@@ -311,11 +317,6 @@ export class Player{
 	private msgVars(msg: string){
 		return msg.replace('%PLAYER%', this.name);
 	}
-}
-
-export interface ICoordinates{
-	x: number;
-	y: number;
 }
 
 export enum PlayerFaceDirection{

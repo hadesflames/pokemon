@@ -1,0 +1,26 @@
+[
+	{
+		"name": "overworld",
+		"path": "../assets/world.png"
+	},
+	{
+		"name": "char_anim",
+		"path": "../assets/char/char.json"
+	},
+	{
+		"name": "tall_grass",
+		"path": "../assets/tall_grass/tall_grass.json"
+	},
+	{
+		"name": "text_bubble",
+		"path": "../assets/menu/text_bubble.json"
+	},
+	{
+		"name": "arrow",
+		"path": "../assets/menu/arrow.png"
+	},
+	{
+		"name": "red_house_roof",
+		"path": "../assets/buildings/red_house_roof.png"
+	}
+]

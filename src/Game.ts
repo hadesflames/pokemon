@@ -1,9 +1,11 @@
 import * as PIXI from 'pixi.js';
-import { Player, ICoordinates } from './Engine/Player';
+import { Player } from './Engine/Player';
 import Common from './util/Common';
+import { ICoordinates } from './util/Geometry';
 import Objects, { IObject } from './Engine/Objects';
 import SceneryEngine from './Engine/SceneryEngine';
 import Keypress from './Engine/Keypress';
+import spriteData from '../data/sprites.json';
 
 export default class Game{
 	static readonly FPS: number = 60;
@@ -51,12 +53,10 @@ export default class Game{
 		document.getElementById('loading')?.remove();
 		this.loading = true;
 		Objects.loadObjects();
-		this.loader.add('overworld', '../assets/world.png')
-					.add('char_anim', '../assets/char/char.json')
-					.add('tall_grass', '../assets/tall_grass/tall_grass.json')
-					.add('text_bubble', '../assets/menu/text_bubble.json')
-					.add('arrow', '../assets/menu/arrow.png')
-					.on('progress', (loader: PIXI.Loader, resource: PIXI.LoaderResource) => this.loadProgressHandler(loader, resource))
+		for(const sprite of spriteData){
+			this.loader.add(sprite.name, sprite.path);
+		}
+		this.loader.on('progress', (loader: PIXI.Loader, resource: PIXI.LoaderResource) => this.loadProgressHandler(loader, resource))
 					.load(() => this.gameLoaded());
 	}
 
@@ -231,6 +231,10 @@ export default class Game{
 
 	getPlayerMovingTo(): ICoordinates | null{
 		return this.player.getMovingTo();
+	}
+
+	isPlayerMoving(): boolean{
+		return this.player.isPlayerMoving();
 	}
 
 	handleEncounter(){

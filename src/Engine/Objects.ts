@@ -1,6 +1,6 @@
 import objectData from '../../data/objects.json';
 import SpatialManager from 'spatial-hashmap';
-import { ICoordinates } from './Player';
+import { ICoordinates } from '../util/Geometry';
 
 export default class Objects{
 	private static MAP = new SpatialManager(407, 399, 25);
@@ -97,10 +97,16 @@ export interface IObject{
 	hasEncounter: boolean;
 	isGrass: boolean;
 	isWater: boolean;
+	sprite: string | null;
+	isAnimated: boolean;
 }
 
 interface IGeometry{
 	pos: {
+		x: number,
+		y: number
+	};
+	delta?: {
 		x: number,
 		y: number
 	};
