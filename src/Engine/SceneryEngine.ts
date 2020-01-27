@@ -8,11 +8,12 @@ export default class SceneryEngine{
 	private onscreen: IDrawnObject = {};
 	private drawnSprites: IDrawnSprite[] = [];
 	private grass_sprite_end: SkipSprite;
+	private last_animated_grass: PositionedAnimatedSprite | null = null;
 	private constructor(){
 		this.grass_sprite_end = new SkipSprite((Game.getGame().getResource('tall_grass')?.textures as PIXI.ITextureDictionary)['4']);
 		this.grass_sprite_end.skipMove = true;
 		this.grass_sprite_end.zIndex = 3;
-		this.grass_sprite_end.x = 400;
+		this.grass_sprite_end.x = 398;
 		this.grass_sprite_end.y = 348;
 		this.grass_sprite_end.scale.set(3, 3);
 		this.grass_sprite_end.visible = false;
@@ -122,10 +123,13 @@ export default class SceneryEngine{
 			const grass_sprite = new PositionedSprite(movingTo, Game.getGame().getResource('tall_grass')?.textures?.init);
 			grass_sprite.scale.set(3, 3);
 			grass_sprite.zIndex = 0;
-			grass_sprite.x = 400 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
+			grass_sprite.x = 396 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
 			grass_sprite.y = 348 + ((amount > 0 ? 1 : -1) * 48 * (x ? 0 : 1));
 			grass_sprite.visible = true;
 
+			if(this.last_animated_grass){
+				this.last_animated_grass.zIndex = 0;
+			}
 			const animatedGrass = new PositionedAnimatedSprite(movingTo, Game.getGame().getResource('tall_grass')?.spritesheet?.animations.anim);
 			animatedGrass.loop = false;
 			animatedGrass.visible = true;
@@ -134,16 +138,20 @@ export default class SceneryEngine{
 			animatedGrass.animationSpeed = 10 / Game.FPS; // 4fps
 			animatedGrass.onComplete = () => {
 				animatedGrass.visible = false;
-				const movingToNew: ICoordinates | null = Game.getGame().getPlayerMovingTo();
-				const new_tile: IObject | null = Objects.checkTileObject(movingToNew ? movingToNew : Game.getGame().getPlayerCoords());
-				if(new_tile != null && new_tile.isGrass){
+				const new_tile: IObject | null = Objects.checkTileObject(Game.getGame().getPlayerCoords());
+				if(!Game.getGame().getPlayerIsMoving() && (new_tile != null && new_tile.isGrass)){
 					this.grass_sprite_end.visible = true;
 				}
 				Game.getGame().removeSprite(animatedGrass);
+				if(this.last_animated_grass &&
+					(this.last_animated_grass.coords.x === animatedGrass.coords.x && this.last_animated_grass.coords.y === animatedGrass.coords.y)){
+					this.last_animated_grass = null;
+				}
 			};
+			this.last_animated_grass = animatedGrass;
 
 			this.drawnSprites.push({
-				kill: 10,
+				kill: 20,
 				killOffPlayer: false,
 				sprite: grass_sprite,
 				next: [

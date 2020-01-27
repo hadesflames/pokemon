@@ -229,12 +229,20 @@ export default class Game{
 		return this.player.getCoords();
 	}
 
+	getPlayerIsMoving(): boolean{
+		return this.player.isPlayerMoving();
+	}
+
 	getPlayerMovingTo(): ICoordinates | null{
 		return this.player.getMovingTo();
 	}
 
 	isPlayerMoving(): boolean{
 		return this.player.isPlayerMoving();
+	}
+
+	isPlayerSurfing(): boolean{
+		return this.player.isPlayerSurfing();
 	}
 
 	handleEncounter(){

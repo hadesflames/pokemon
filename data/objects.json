@@ -38,6 +38,99 @@
 	},
 	{
 		"geometry": {
+			"pos": { "x": 74, "y": 264 },
+			"delta": { "x": 0, "y": -24 },
+			"aabb": {
+				"min": { "x": 74, "y": 264 },
+				"max": { "x": 78, "y": 265 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "red_house_roof",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 74, "y": 264 },
+			"aabb": {
+				"min": { "x": 74, "y": 264 },
+				"max": { "x": 78, "y": 267 }
+			}
+		},
+		"door": { "x": 75, "y": 267 },
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 73, "y": 270 },
+			"delta": { "x": 0, "y": -24 },
+			"aabb": {
+				"min": { "x": 73, "y": 270 },
+				"max": { "x": 79, "y": 271 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "oak_lab_roof",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 73, "y": 270 },
+			"aabb": {
+				"min": { "x": 73, "y": 270 },
+				"max": { "x": 79, "y": 273 }
+			}
+		},
+		"door": { "x": 76, "y": 273 },
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 64, "y": 267 },
+			"delta": { "x": 6, "y": -18 },
+			"aabb": {
+				"min": { "x": 64, "y": 267 },
+				"max": { "x": 64, "y": 267 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "mailbox_head",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
 			"pos": { "x": 64, "y": 267 },
 			"aabb": {
 				"min": { "x": 64, "y": 267 },
@@ -56,6 +149,43 @@
 	},
 	{
 		"geometry": {
+			"pos": { "x": 73, "y": 267 },
+			"delta": { "x": 6, "y": -18 },
+			"aabb": {
+				"min": { "x": 73, "y": 267 },
+				"max": { "x": 73, "y": 267 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "mailbox_head",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 73, "y": 267 },
+			"aabb": {
+				"min": { "x": 73, "y": 267 },
+				"max": { "x": 73, "y": 267 }
+			}
+		},
+		"door": null,
+		"msg": ["Blue's house"],
+		"msgLocation": { "x": 73, "y": 267 },
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
 			"pos": { "x": 65, "y": 271 },
 			"aabb": {
 				"min": { "x": 65, "y": 271 },
@@ -65,6 +195,24 @@
 		"door": null,
 		"msg": ["Pallet Town\nShades of your journey await!"],
 		"msgLocation": { "x": 69, "y": 271 },
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 73, "y": 276 },
+			"aabb": {
+				"min": { "x": 73, "y": 276 },
+				"max": { "x": 78, "y": 276 }
+			}
+		},
+		"door": null,
+		"msg": ["Oak Pokémon Research Lab"],
+		"msgLocation": { "x": 76, "y": 276 },
 		"canMove": false,
 		"hasEncounter": false,
 		"isGrass": false,
@@ -178,6 +326,302 @@
 		"isGrass": false,
 		"isWater": false,
 		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 60, "y": 280 },
+			"aabb": {
+				"min": { "x": 60, "y": 280 },
+				"max": { "x": 66, "y": 294 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 71, "y": 280 },
+			"aabb": {
+				"min": { "x": 71, "y": 280 },
+				"max": { "x": 76, "y": 280 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 77, "y": 280 },
+			"aabb": {
+				"min": { "x": 77, "y": 280 },
+				"max": { "x": 83, "y": 290 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 74, "y": 258 },
+			"aabb": {
+				"min": { "x": 74, "y": 258 },
+				"max": { "x": 81, "y": 261 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 74, "y": 257 },
+			"aabb": {
+				"min": { "x": 74, "y": 257 },
+				"max": { "x": 74, "y": 257 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 74, "y": 256 },
+			"aabb": {
+				"min": { "x": 74, "y": 256 },
+				"max": { "x": 81, "y": 256 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 82, "y": 256 },
+			"aabb": {
+				"min": { "x": 82, "y": 256 },
+				"max": { "x": 83, "y": 279 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 62, "y": 280 },
+			"delta": { "x": 6, "y": -39 },
+			"aabb": {
+				"min": { "x": 62, "y": 280 },
+				"max": { "x": 63, "y": 280 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "tree_top",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 64, "y": 280 },
+			"delta": { "x": 6, "y": -39 },
+			"aabb": {
+				"min": { "x": 64, "y": 280 },
+				"max": { "x": 65, "y": 280 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "tree_top",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 78, "y": 280 },
+			"delta": { "x": 6, "y": -39 },
+			"aabb": {
+				"min": { "x": 78, "y": 280 },
+				"max": { "x": 79, "y": 280 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "tree_top",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 80, "y": 280 },
+			"delta": { "x": 6, "y": -39 },
+			"aabb": {
+				"min": { "x": 80, "y": 280 },
+				"max": { "x": 81, "y": 280 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": false,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": false,
+		"sprite": "tree_top",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 67, "y": 277 },
+			"aabb": {
+				"min": { "x": 67, "y": 277 },
+				"max": { "x": 70, "y": 284 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": null,
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 71, "y": 255 },
+			"delta": { "x": 30, "y": 7 },
+			"aabb": {
+				"min": { "x": 71, "y": 255 },
+				"max": { "x": 71, "y": 255 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_vertical",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 74, "y": 255 },
+			"delta": { "x": 6, "y": 7 },
+			"aabb": {
+				"min": { "x": 74, "y": 255 },
+				"max": { "x": 74, "y": 255 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_vertical",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 72, "y": 254 },
+			"delta": { "x": 0, "y": 0 },
+			"aabb": {
+				"min": { "x": 72, "y": 254 },
+				"max": { "x": 72, "y": 254 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_horizontal",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 71, "y": 254 },
+			"delta": { "x": 21, "y": 0 },
+			"aabb": {
+				"min": { "x": 71, "y": 254 },
+				"max": { "x": 71, "y": 254 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_post",
 		"isAnimated": false
 	}
 ]

@@ -22,5 +22,29 @@
 	{
 		"name": "red_house_roof",
 		"path": "../assets/buildings/red_house_roof.png"
+	},
+	{
+		"name": "oak_lab_roof",
+		"path": "../assets/buildings/oak_lab_roof.png"
+	},
+	{
+		"name": "mailbox_head",
+		"path": "../assets/buildings/mailbox_head.png"
+	},
+	{
+		"name": "tree_top",
+		"path": "../assets/tree_top.png"
+	},
+	{
+		"name": "fence_horizontal",
+		"path": "../assets/fence/fence_horizontal.png"
+	},
+	{
+		"name": "fence_vertical",
+		"path": "../assets/fence/fence_vertical.png"
+	},
+	{
+		"name": "fence_post",
+		"path": "../assets/fence/fence_post.png"
 	}
 ]

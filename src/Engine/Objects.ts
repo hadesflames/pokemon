@@ -1,6 +1,7 @@
 import objectData from '../../data/objects.json';
 import SpatialManager from 'spatial-hashmap';
 import { ICoordinates } from '../util/Geometry';
+import Game from '../Game.js';
 
 export default class Objects{
 	private static MAP = new SpatialManager(407, 399, 25);
@@ -10,7 +11,8 @@ export default class Objects{
 		for(const val of objects){
 			const object: IObject = val as IObject;
 			if((object.geometry.aabb.min.x <= next.x && object.geometry.aabb.max.x >= next.x) &&
-				(object.geometry.aabb.min.y <= next.y && object.geometry.aabb.max.y >= next.y) && !object.canMove){
+				(object.geometry.aabb.min.y <= next.y && object.geometry.aabb.max.y >= next.y) &&
+				(!object.canMove || (object.isWater && !Game.getGame().isPlayerSurfing()))){
 				return false;
 			}
 		}

@@ -31,6 +31,7 @@ export class Player{
 	public stopMove: boolean = false;
 	private holdMove: number = 0;
 	private animateSprite: boolean = false;
+	private isSurfing: boolean = false;
 
 	constructor(name: string, x: number, y: number){
 		this.name = name;
@@ -87,6 +88,10 @@ export class Player{
 
 	isPlayerMoving(): boolean{
 		return this.isMoving;
+	}
+
+	isPlayerSurfing(): boolean{
+		return this.isSurfing;
 	}
 
 	handleMove(){
@@ -232,7 +237,7 @@ export class Player{
 		for(const spr of this.text_bubble){
 			spr.x = x + 18;
 			spr.y = y;
-			spr.zIndex = 2;
+			spr.zIndex = 5;
 			spr.scale.set(3, 3);
 			spr.visible = false;
 			Game.getGame().addSprite(spr);
@@ -267,7 +272,7 @@ export class Player{
 		this.screen_text = new PokeText(msg);
 		this.screen_text.x = 50;
 		this.screen_text.y = 480;
-		this.screen_text.zIndex = 3;
+		this.screen_text.zIndex = 6;
 		Game.getGame().addSprite(this.screen_text);
 		if(this.cur_msg < this.messages.length - 1)
 			this.addNextIndicator();
