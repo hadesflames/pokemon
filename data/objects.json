@@ -550,11 +550,87 @@
 	},
 	{
 		"geometry": {
+			"pos": { "x": 72, "y": 254 },
+			"delta": { "x": -24, "y": -18 },
+			"aabb": {
+				"min": { "x": 72, "y": 254 },
+				"max": { "x": 72, "y": 254 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_horizontal",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 73, "y": 254 },
+			"delta": { "x": 24, "y": -18 },
+			"aabb": {
+				"min": { "x": 73, "y": 254 },
+				"max": { "x": 73, "y": 254 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_horizontal",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 72, "y": 255 },
+			"delta": { "x": 24, "y": -66 },
+			"aabb": {
+				"min": { "x": 72, "y": 254 },
+				"max": { "x": 72, "y": 254 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_horizontal",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
 			"pos": { "x": 71, "y": 255 },
 			"delta": { "x": 30, "y": 7 },
 			"aabb": {
 				"min": { "x": 71, "y": 255 },
 				"max": { "x": 71, "y": 255 }
+			}
+		},
+		"door": null,
+		"msg": null,
+		"msgLocation": null,
+		"canMove": true,
+		"hasEncounter": false,
+		"isGrass": false,
+		"isWater": true,
+		"sprite": "fence_vertical",
+		"isAnimated": false
+	},
+	{
+		"geometry": {
+			"pos": { "x": 71, "y": 254 },
+			"delta": { "x": 30, "y": 7 },
+			"aabb": {
+				"min": { "x": 71, "y": 254 },
+				"max": { "x": 71, "y": 254 }
 			}
 		},
 		"door": null,
@@ -588,11 +664,11 @@
 	},
 	{
 		"geometry": {
-			"pos": { "x": 72, "y": 254 },
-			"delta": { "x": 0, "y": 0 },
+			"pos": { "x": 74, "y": 254 },
+			"delta": { "x": 6, "y": 7 },
 			"aabb": {
-				"min": { "x": 72, "y": 254 },
-				"max": { "x": 72, "y": 254 }
+				"min": { "x": 74, "y": 254 },
+				"max": { "x": 74, "y": 254 }
 			}
 		},
 		"door": null,
@@ -602,26 +678,7 @@
 		"hasEncounter": false,
 		"isGrass": false,
 		"isWater": true,
-		"sprite": "fence_horizontal",
-		"isAnimated": false
-	},
-	{
-		"geometry": {
-			"pos": { "x": 71, "y": 254 },
-			"delta": { "x": 21, "y": 0 },
-			"aabb": {
-				"min": { "x": 71, "y": 254 },
-				"max": { "x": 71, "y": 254 }
-			}
-		},
-		"door": null,
-		"msg": null,
-		"msgLocation": null,
-		"canMove": true,
-		"hasEncounter": false,
-		"isGrass": false,
-		"isWater": true,
-		"sprite": "fence_post",
+		"sprite": "fence_vertical",
 		"isAnimated": false
 	}
 ]
