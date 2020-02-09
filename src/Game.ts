@@ -10,6 +10,7 @@ import spriteData from '../data/sprites.json';
 export default class Game{
 	static readonly FPS: number = 60;
 	private static GAME: Game;
+	private static RESOURCE_SCALE: IScaleMap = {};
 
 	private loaded: boolean = false;
 	private loading: boolean = false;
@@ -55,6 +56,7 @@ export default class Game{
 		Objects.loadObjects();
 		for(const sprite of spriteData){
 			this.loader.add(sprite.name, sprite.path);
+			Game.RESOURCE_SCALE[sprite.name] = sprite.scale;
 		}
 		this.loader.on('progress', (loader: PIXI.Loader, resource: PIXI.LoaderResource) => this.loadProgressHandler(loader, resource))
 					.load(() => this.gameLoaded());
@@ -67,13 +69,15 @@ export default class Game{
 	private gameLoaded(){
 		this.overWorld.sortableChildren = true;
 		this.app.stage.addChild(this.overWorld);
+		const overworldScale: IScale = Game.RESOURCE_SCALE.overworld;
 		this.overWorldSprite = new PIXI.Sprite(this.loader.resources.overworld.texture);
 		this.overWorldSprite.x = 400 + (this.player.getX() * -48);
 		this.overWorldSprite.y = 349 + (this.player.getY() * -48);
 		this.overWorldSprite.zIndex = 0;
-		this.overWorldSprite.scale.set(3, 3);
+		this.overWorldSprite.scale.set(overworldScale.x, overworldScale.y);
 
-		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources.char_anim);
+		const playerSpriteScale: IScale = Game.RESOURCE_SCALE.char_l;
+		const playerSprite: PIXI.Sprite = this.player.loadSprite(this.loader.resources.char_l, playerSpriteScale);
 
 		this.overWorld.addChild(this.overWorldSprite);
 		this.overWorld.addChild(playerSprite);
@@ -251,6 +255,14 @@ export default class Game{
 		}
 	}
 
+	getResourceScale(name: string): IScale{
+		if(!(name in Game.RESOURCE_SCALE)){
+			return {x: 3, y: 3};
+		}
+
+		return Game.RESOURCE_SCALE[name];
+	}
+
 	getResource(name: string): PIXI.LoaderResource | null{
 		if(!(name in this.loader.resources)){
 			return null;
@@ -264,4 +276,13 @@ export class SkipSprite extends PIXI.Sprite{
 	constructor(texture?: PIXI.Texture){
 		super(texture);
 	}
+}
+
+interface IScaleMap{
+	[index: string]: IScale;
+}
+
+export interface IScale{
+	x: number;
+	y: number;
 }

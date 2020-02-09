@@ -1,50 +1,67 @@
 [
 	{
 		"name": "overworld",
-		"path": "../assets/world.png"
+		"path": "../assets/world.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
-		"name": "char_anim",
-		"path": "../assets/char/char.json"
+		"name": "char_red",
+		"path": "../assets/char/red.json",
+		"scale": {"x": 3, "y": 3}
+	},
+	{
+		"name": "char_l",
+		"path": "../assets/char/l.json",
+		"scale": {"x": 2.18, "y": 2.18}
 	},
 	{
 		"name": "tall_grass",
-		"path": "../assets/tall_grass/tall_grass.json"
+		"path": "../assets/tall_grass/tall_grass.json",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "text_bubble",
-		"path": "../assets/menu/text_bubble.json"
+		"path": "../assets/menu/text_bubble.json",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "arrow",
-		"path": "../assets/menu/arrow.png"
+		"path": "../assets/menu/arrow.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "red_house_roof",
-		"path": "../assets/buildings/red_house_roof.png"
+		"path": "../assets/buildings/red_house_roof.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "oak_lab_roof",
-		"path": "../assets/buildings/oak_lab_roof.png"
+		"path": "../assets/buildings/oak_lab_roof.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "mailbox_head",
-		"path": "../assets/buildings/mailbox_head.png"
+		"path": "../assets/buildings/mailbox_head.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "tree_top",
-		"path": "../assets/tree_top.png"
+		"path": "../assets/tree_top.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "fence_horizontal",
-		"path": "../assets/fence/fence_horizontal.png"
+		"path": "../assets/fence/fence_horizontal.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "fence_vertical",
-		"path": "../assets/fence/fence_vertical.png"
+		"path": "../assets/fence/fence_vertical.png",
+		"scale": {"x": 3, "y": 3}
 	},
 	{
 		"name": "fence_post",
-		"path": "../assets/fence/fence_post.png"
+		"path": "../assets/fence/fence_post.png",
+		"scale": {"x": 3, "y": 3}
 	}
 ]

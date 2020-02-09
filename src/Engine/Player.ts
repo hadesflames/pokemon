@@ -1,5 +1,5 @@
 import Common from '../util/Common';
-import Game from '../Game';
+import Game, { IScale } from '../Game';
 import * as PIXI from 'pixi.js';
 import Objects, { IObject } from './Objects';
 import PokeText from '../util/PokeText';
@@ -12,6 +12,7 @@ export class Player{
 	private coords: ICoordinates;
 	private movingTo: ICoordinates | null = null;
 	private sprite: PIXI.Sprite;
+	private playerSpriteScale: IScale = {x: 3, y: 3};
 	private animatedSprite: PIXI.AnimatedSprite | null;
 	private spriteTextures: PIXI.ITextureDictionary;
 	private spriteSheet: PIXI.Spritesheet | null;
@@ -43,20 +44,22 @@ export class Player{
 		this.spriteSheet = null;
 	}
 
-	loadSprite(resource: PIXI.LoaderResource): PIXI.Sprite{
+	loadSprite(resource: PIXI.LoaderResource, resourceScale: IScale): PIXI.Sprite{
 		const textures: PIXI.ITextureDictionary = resource.textures as PIXI.ITextureDictionary;
 		this.sprite = new PIXI.Sprite(textures[PlayerFaceDirectionTexture[this.faceDirection]]);
 		this.sprite.name = 'PLAYER';
 		this.sprite.x = 400;
 		this.sprite.y = 300;
 		this.sprite.zIndex = 1;
-		this.sprite.scale.set(3, 3);
+		this.sprite.scale.set(resourceScale.x, resourceScale.y);
 		this.spriteTextures = textures;
 		this.spriteSheet = resource.spritesheet as PIXI.Spritesheet;
+		this.playerSpriteScale = resourceScale;
 		this.addTextBubble();
+		const arrowScale: IScale = Game.getGame().getResourceScale('arrow');
 		this.screen_text_next = new PIXI.Sprite(Game.getGame().getResource('arrow')?.texture);
-		this.screen_text_next.zIndex = 3;
-		this.screen_text_next.scale.set(3, 3);
+		this.screen_text_next.zIndex = 5;
+		this.screen_text_next.scale.set(arrowScale.x, arrowScale.y);
 		this.screen_text_next.visible = false;
 		Game.getGame().addSprite(this.screen_text_next);
 		return this.sprite;
@@ -170,7 +173,7 @@ export class Player{
 			this.animatedSprite = new PIXI.AnimatedSprite(this.spriteSheet?.animations[PlayerFaceDirectionTexture[direction]]);
 			this.animatedSprite.name = 'PLAYER';
 			this.animatedSprite.animationSpeed = 6 / Game.FPS; // 4fps
-			this.animatedSprite.scale.set(3, 3);
+			this.animatedSprite.scale.set(this.playerSpriteScale.x, this.playerSpriteScale.y);
 			this.animatedSprite.zIndex = 1;
 			this.animatedSprite.play();
 			this.animatedSprite.x = 400;

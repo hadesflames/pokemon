@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import Objects, { IObject } from './Objects';
-import Game, { SkipSprite } from '../Game';
+import Game, { SkipSprite, IScale } from '../Game';
 import { ICoordinates, Rectangle } from '../util/Geometry';
 
 export default class SceneryEngine{
@@ -10,12 +10,13 @@ export default class SceneryEngine{
 	private grass_sprite_end: SkipSprite;
 	private last_animated_grass: PositionedAnimatedSprite | null = null;
 	private constructor(){
+		const grass_scale: IScale = Game.getGame().getResourceScale('tall_grass');
 		this.grass_sprite_end = new SkipSprite((Game.getGame().getResource('tall_grass')?.textures as PIXI.ITextureDictionary)['4']);
 		this.grass_sprite_end.skipMove = true;
 		this.grass_sprite_end.zIndex = 3;
 		this.grass_sprite_end.x = 398;
 		this.grass_sprite_end.y = 348;
-		this.grass_sprite_end.scale.set(3, 3);
+		this.grass_sprite_end.scale.set(grass_scale.x, grass_scale.y);
 		this.grass_sprite_end.visible = false;
 		Game.getGame().addSprite(this.grass_sprite_end);
 	}
@@ -73,6 +74,7 @@ export default class SceneryEngine{
 				if(gameObject.sprite && this.onScreen(gameObject, playerCoords) && !this.isDrawn(gameObject.geometry.pos)){
 					const resource: PIXI.LoaderResource | null = Game.getGame().getResource(gameObject.sprite);
 					if(resource){
+						const spriteScale: IScale = Game.getGame().getResourceScale(gameObject.sprite);
 						const sprite: PIXI.Sprite | PIXI.AnimatedSprite = gameObject.isAnimated ?
 																			new PIXI.AnimatedSprite(resource.spritesheet?.animations.anim) :
 																			new PIXI.Sprite(resource.texture);
@@ -81,7 +83,7 @@ export default class SceneryEngine{
 						sprite.x = 400 + (48 * xDelta) + (gameObject.geometry.delta ? gameObject.geometry.delta.x : 0);
 						sprite.y = 348 + (48 * yDelta) + (gameObject.geometry.delta ? gameObject.geometry.delta.y : 0);
 						sprite.zIndex = 3;
-						sprite.scale.set(3, 3);
+						sprite.scale.set(spriteScale.x, spriteScale.y);
 						if(gameObject.isAnimated){
 							(sprite as PIXI.AnimatedSprite).loop = true;
 						}
@@ -120,8 +122,9 @@ export default class SceneryEngine{
 
 			const x: boolean = movingTo.x !== playerCoords.x;
 			const amount = movingTo.x !== playerCoords.x ? (movingTo.x < playerCoords.x ? -1 : 1) : (movingTo.y < playerCoords.y ? -1 : 1);
+			const grass_scale: IScale = Game.getGame().getResourceScale('tall_grass');
 			const grass_sprite = new PositionedSprite(movingTo, Game.getGame().getResource('tall_grass')?.textures?.init);
-			grass_sprite.scale.set(3, 3);
+			grass_sprite.scale.set(grass_scale.x, grass_scale.y);
 			grass_sprite.zIndex = 0;
 			grass_sprite.x = 396 + ((amount > 0 ? 1 : -1) * 48 * (x ? 1 : 0));
 			grass_sprite.y = 348 + ((amount > 0 ? 1 : -1) * 48 * (x ? 0 : 1));
@@ -134,7 +137,7 @@ export default class SceneryEngine{
 			animatedGrass.loop = false;
 			animatedGrass.visible = true;
 			animatedGrass.zIndex = 3;
-			animatedGrass.scale.set(3, 3);
+			animatedGrass.scale.set(grass_scale.x, grass_scale.y);
 			animatedGrass.animationSpeed = 10 / Game.FPS; // 4fps
 			animatedGrass.onComplete = () => {
 				animatedGrass.visible = false;
